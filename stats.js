@@ -11,20 +11,15 @@ const stats = (file, getLinks, validate) => {
   result.Unique = result.Total - repeat;
   if (validate) {
     let broken = 0;
-    const linksValidated = links.map((link) => validate(link).then((ok) => ok).catch((err) => {
-      if (err) {
-        console.log(err);
-        broken += 1;
-      }
-      return err;
+    const linksValidated = links.map((link) => validate(link).then((ok) => ok).catch(() => {
+      broken += 1;
     }));
-    Promise.all(linksValidated);
-    result.Broken = broken;
-    return result;
-  }else{
-    return result;
+    return Promise.all(linksValidated).then(() => {
+      result.Broken = broken;
+      return result;
+    }).catch(() => result);
   }
-  
+  return result;
 };
 
 module.exports = {
