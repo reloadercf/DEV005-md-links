@@ -10,7 +10,7 @@ const getLinks = (uri) => {
       const matches = currentLink.match(urlRegex);
       if (matches) {
         const [, text, url] = matches;
-        acc.push({ text, url });
+        acc.push({ text, url, file: uri });
       }
     }
     return acc;
