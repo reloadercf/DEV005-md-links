@@ -32,7 +32,7 @@ const mdLinks = (path, options) => {
   });
 };
 
-mdLinks('./README.md', { stats: true, validate: true }).then((res) => {
+mdLinks('./README.md').then((res) => {
   console.log(res);
 }).catch((err) => {
   console.log(err);

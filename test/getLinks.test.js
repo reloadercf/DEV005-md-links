@@ -16,7 +16,7 @@ describe('getLinks', () => {
     const links = getLinks('./File.md');
     // assertion to match after run
     expect(links).toEqual([
-      { text: 'Markdown', url: 'https://es.wikipedia.org/wiki/Markdown' },
+      { text: 'Markdown', url: 'https://es.wikipedia.org/wiki/Markdown', file: './File.md' },
     ]);
     expect(fs.readFileSync).toHaveBeenCalledWith('./File.md', 'utf8');
   });
