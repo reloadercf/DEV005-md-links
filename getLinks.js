@@ -4,6 +4,7 @@ const getLinks = (uri) => {
   const data = fs.readFileSync(uri, 'utf8');
 
   const getMdLinksFormatMd = data.match(/!?\[([^\]]*)\]\(([^\)]+)\)/gm);
+  if (!getMdLinksFormatMd) return [];
   const onlyLinks = getMdLinksFormatMd.reduce((acc, currentLink) => {
     if (currentLink.includes('http://') || currentLink.includes('https://')) {
       const urlRegex = /\[(.*?)\]\((.*?)\)/;

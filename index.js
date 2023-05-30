@@ -10,13 +10,13 @@ const mdLinks = (path, options) => {
     if ((!options && filesPath) || (!options.validate && !options.stats && filesPath)) {
       if (filesPath) {
         const linksPaths = filesPath.map((file) => getLinks(file));
-        resolve(linksPaths);
+        resolve(linksPaths.flat());
       }
     }
     if (options && options.validate && !options.stats && filesPath) {
       if (filesPath) {
         const linksPaths = filesPath.map((file) => getLinks(file));
-        const linksValid = linksPaths[0].map((link) => validate(link)
+        const linksValid = linksPaths.flat().map((link) => validate(link)
           .then((obj) => obj)
           .catch((obj) => obj));
         resolve(Promise.all(linksValid));
@@ -32,8 +32,6 @@ const mdLinks = (path, options) => {
   });
 };
 
-mdLinks('./README.md').then((res) => {
-  console.log(res);
-}).catch((err) => {
-  console.log(err);
-});
+module.exports = {
+  mdLinks,
+};

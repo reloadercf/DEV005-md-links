@@ -1,5 +1,5 @@
-const stats = (file, getLinks, validate) => {
-  const links = getLinks(file[0]);
+const stats = (files, getLinks, validate) => {
+  const links = files.map((path) => getLinks(path));
   const result = { Total: links.length };
 
   const lookup = links.reduce((acc, current) => {
@@ -11,7 +11,7 @@ const stats = (file, getLinks, validate) => {
   result.Unique = result.Total - repeat;
   if (validate) {
     let broken = 0;
-    const linksValidated = links.map((link) => validate(link).then((ok) => ok).catch(() => {
+    const linksValidated = links.flat().map((link) => validate(link).then((ok) => ok).catch(() => {
       broken += 1;
     }));
     return Promise.all(linksValidated).then(() => {
